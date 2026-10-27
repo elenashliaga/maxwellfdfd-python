@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "maxwellfdfd"
+version = "0.1.0"
+description = "Python port of the MATLAB MaxwellFDFD library for finite-difference frequency-domain (FDFD) electromagnetic simulations."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [
+    { name = "Elena Shliaga" },
+]
+keywords = ["FDFD", "electromagnetics", "Maxwell", "photonics", "simulation"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+
+dependencies = [
+    "numpy>=1.21",
+    "scipy>=1.7",
+    "matplotlib>=3.4",
+    "h5py>=3.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["maxwellfdfd*"]
+exclude = ["examples*", "tests*", "plans*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "matlab: marks tests requiring MATLAB reference data (deselect with '-m \"not matlab\"')",
+]
+# By default run only the fast Tier 0 / Tier 1 tests; opt into the slow
+# analytical validation with:  pytest -m slow
+addopts = "-m 'not slow and not matlab'"
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]
